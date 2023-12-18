@@ -1,3 +1,0 @@
-networks:
-  eShopNet:
-    driver: bridge

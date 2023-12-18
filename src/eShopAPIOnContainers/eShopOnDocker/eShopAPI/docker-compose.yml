@@ -1,0 +1,8 @@
+services:
+  sqlDb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+  eShopAPI:
+    image: eshop.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile

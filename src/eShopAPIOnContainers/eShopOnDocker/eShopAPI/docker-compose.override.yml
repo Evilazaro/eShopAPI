@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  sqlDb:
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD="123#@!qweEWQ"
+    ports:
+      - 1433:1433
+    networks:
+      - eShopNet
+    volumes:
+      - sqlDbFile:/etc/data
+  eShopAPI:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - eShopNet
+    ports:
+      - 80:8080
+      - 81:8081
+    depends_on:
+      - sqlDb
+      
+networks:
+  eShopNet:
+    driver: bridge
+
+volumes:
+  sqlDbFile:
+    name: "sqlDbFile"
