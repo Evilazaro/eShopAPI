@@ -1,8 +1,8 @@
+version: '3.4'
+
 services:
-  sqlDb:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-  eShopAPI:
-    image: eshop.api:${TAG:-latest}
+  eshopapi:
+    image: ${DOCKER_REGISTRY-}eshopapi
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: eShopAPI/Dockerfile
