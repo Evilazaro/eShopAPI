@@ -1,14 +1,32 @@
 version: '3.4'
 
 services:
+  eshopDb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=123#@!qweEWQ
+    volumes:
+      - eshopDbVolume:/etc/data
+    networks:
+      - eShopNet
   eshopapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+    networks:
+      - eShopNet
     ports:
-      - "8080"
-      - "8081"
+      - "8080:8080"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    depends_on:
+      - eshopDb
+
+networks:
+  eShopNet:
+    driver: bridge
+
+volumes:
+  eshopDbVolume:
