@@ -1,0 +1,53 @@
+name: dockercompose2502154903079291964
+services:
+  eshopDb:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: 123#@!qweEWQ
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      eShopNet: null
+    volumes:
+      - type: volume
+        source: eshopDbVolume
+        target: /etc/data
+        volume: {}
+  eshopapi:
+    build:
+      context: C:\demos\eShopAPI\src\eShopAPIOnContainers\eShopOnDocker\eShopAPI
+      dockerfile: eShopAPI/Dockerfile
+    depends_on:
+      eshopDb:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+    image: eshopapi
+    networks:
+      eShopNet: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "5000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\evalvesd\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\evalvesd\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  eShopNet:
+    name: dockercompose2502154903079291964_eShopNet
+    driver: bridge
+volumes:
+  eshopDbVolume:
+    name: dockercompose2502154903079291964_eshopDbVolume

@@ -16,7 +16,7 @@
         "ASPNETCORE_HTTPS_PORTS": "8081"
       },
       "publishAllPorts": true,
-      "useSSL": false
+      "useSSL": true
     }
   }
 }
