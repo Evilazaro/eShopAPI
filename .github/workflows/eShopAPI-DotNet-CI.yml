@@ -24,4 +24,5 @@ jobs:
       working-directory: ./src/eShopLocalVSDev/eShopAPI/
       run: dotnet restore eShopAPI.csproj
     - name: Build eShop API
+      working-directory: ./src/eShopLocalVSDev/eShopAPI/
       run: dotnet build eShopAPI.csproj --no-restore
