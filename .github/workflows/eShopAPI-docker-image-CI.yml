@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/eShopAPI/Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/Dockerfile --tag my-image-name:$(date +%s)
