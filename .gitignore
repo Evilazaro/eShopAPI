@@ -1,7 +1,27 @@
-# Ignore bin and obj folders
-**/bin/
-**/obj/
+# Ignore Visual Studio files
+.vscode/
+.vs/
+*.suo
+*.sln.cache
+*.suo
+*.user
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.suo
+*.sln.cache
+*.suo
+*.user
+*.userosscache
 
-# Ignore dll and exe files
+# Ignore .NET files
+bin/
+obj/
 *.dll
 *.exe
+*.pdb
+*.userprefs
+*.vscode
+*.suo
+*.user
