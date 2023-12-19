@@ -5,7 +5,9 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=123#@!qweEWQ
+      - MSSQL_SA_PASSWORD=/run/secrets/dbPassword
+    secrets:
+      - dbPassword
     volumes:
       - eshopDbVolume:/etc/data
     networks:
@@ -14,6 +16,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+      - CONNECTIONSTRING= /run/secrets/dbPassword
+    secrets:
+      - dbPassword 
     networks:
       - eShopNet
     ports:
@@ -30,3 +35,7 @@ networks:
 
 volumes:
   eshopDbVolume:
+
+secrets:
+  dbPassword:
+    file: ./data/dbPassword.txt

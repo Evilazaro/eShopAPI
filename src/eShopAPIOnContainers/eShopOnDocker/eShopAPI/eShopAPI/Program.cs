@@ -2,6 +2,7 @@ using eShopAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRING");
 
 // Add services to the container.
 builder.Services.AddDbContext<StoreDBContext>(OptionsBuilderConfigurationExtensions =>
