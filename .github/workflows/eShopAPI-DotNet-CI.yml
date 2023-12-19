@@ -26,3 +26,6 @@ jobs:
     - name: Build eShop API
       working-directory: ./src/eShopLocalVSDev/eShopAPI/
       run: dotnet build eShopAPI.csproj --no-restore
+    - name: Test eShop API
+      working-directory: ./src/eShopLocalVSDev/eShopAPI/
+      run: dotnet test eShopAPI.csproj --no-build --verbosity normal
