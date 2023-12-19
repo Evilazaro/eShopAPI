@@ -1,41 +1,48 @@
 version: '3.4'
 
 services:
-  eshopDb:
+  eshopdb:
+    container_name: eshopdb
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=/run/secrets/dbPassword
+      - MSSQL_SA_PASSWORD="123#@!qweEWQ"
     secrets:
-      - dbPassword
+      - dbpassword
     volumes:
-      - eshopDbVolume:/etc/data
+      - eshopdbvolume:/etc/data
     networks:
-      - eShopNet
+      - eshopnet
+    ports:
+      - 1433:1433
+  
   eshopapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - CONNECTIONSTRING= /run/secrets/dbPassword
+      - CONNECTIONSTRING=./data/dbpassword
     secrets:
-      - dbPassword 
+      - dbpassword 
     networks:
-      - eShopNet
+      - eshopnet
     ports:
-      - "5000:8080"
+      - 5000:8080
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     depends_on:
-      - eshopDb
+      - eshopdb
 
 networks:
-  eShopNet:
+  eshopnet:
+    name: eshopnet
     driver: bridge
-
+    
 volumes:
-  eshopDbVolume:
+    eshopdbvolume:
+      name: eshopdbvolume
 
 secrets:
-  dbPassword:
-    file: ./data/dbPassword.txt
+  dbpassword:
+    name: dbpassword
+    file: ./data/dbpassword.txt

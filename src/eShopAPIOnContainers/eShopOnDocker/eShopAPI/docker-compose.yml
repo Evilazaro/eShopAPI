@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   eshopapi:
+    container_name: eshopapi
     image: ${DOCKER_REGISTRY-}eshopapi
     build:
       context: .
