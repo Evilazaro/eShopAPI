@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: eShop API CI - Docker Compose Buil Image
 
 on:
   push:
@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
-
+jobs: 
   build:
 
     runs-on: ubuntu-latest
