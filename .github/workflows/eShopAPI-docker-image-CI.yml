@@ -1,15 +1,2 @@
-name: eShopAPI Docker Image CI
-
-on:
-  push:
-    branches: [ "main" ]
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/Dockerfile --tag my-image-name:$(date +%s)
+name: eShop API CI - Docker Image
+description: Build API withou pushing it
