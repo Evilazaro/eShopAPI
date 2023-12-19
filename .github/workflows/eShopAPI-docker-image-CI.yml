@@ -13,6 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
+    - name: Build eShop API Docker image
       working-directory: ./src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/
       run: docker-compose build
