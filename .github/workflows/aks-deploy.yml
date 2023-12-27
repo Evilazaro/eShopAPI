@@ -1,4 +1,4 @@
-name: eShop Cloud Resources Provisioning
+name: eShop - Provision Cloud Resources and Deploy eShop API
 
 on:
   workflow_dispatch:
@@ -37,11 +37,14 @@ jobs:
               retentionInDays=30 \
               maxPods=238 \
               ingressApplicationGateway=true
-
+  
+  build-eshop-api-docker-image:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build eShop API Docker image
         uses: actions/checkout@v3
         with:
-          working-directory: ./src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/
+          working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
           run: docker-compose build
 
       - name: Push eShopAPI image to Azure Container Registry
@@ -49,5 +52,5 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az acr login --name creshop
+            az acr login --name creshop --expose-token
             docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
