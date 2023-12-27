@@ -37,3 +37,17 @@ jobs:
               retentionInDays=30 \
               maxPods=238 \
               ingressApplicationGateway=true
+
+      - name: Build eShop API Docker image
+        uses: actions/checkout@v3
+        with:
+          working-directory: ./src/eShopAPIOnContainers/eShopOnDocker/eShopAPI/
+          run: docker-compose build
+
+      - name: Push eShopAPI image to Azure Container Registry
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az acr login --name creshop
+            docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
