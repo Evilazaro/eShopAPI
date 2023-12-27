@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   reusable_workflow_job:
-    uses: Evilazaro/eShopAPI/blob/main/.github/workflows/AKSC_Deploy.yml@0.10.3
+    uses: ./AKSC_Deploy.yml@0.10.3
     with:
       templateVersion: 0.10.3
       rg: eShop-rg
