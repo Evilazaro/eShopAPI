@@ -1,0 +1,22 @@
+name: Deploy AKS on Azure
+
+on:
+  workflow_dispatch:
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  reusable_workflow_job:
+    uses: Azure/AKS-Construction/.github/workflows/AKSC_Deploy.yml@0.10.3
+    with:
+      templateVersion: 0.10.3
+      rg: eShop-Solution-rg
+      resourceName: eShop-AKS-Cluster
+      templateParams: resourceName=eShop-AKS-Cluster upgradeChannel=stable SystemPoolType=Standard agentCountMax=20 osDiskType=Managed osDiskSizeGB=32 registries_sku=Premium acrPushRolePrincipalId=_USER_OBJECT_ID_ omsagent=true retentionInDays=30 maxPods=238 ingressApplicationGateway=true
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      USER_OBJECT_ID: ${{ secrets.USER_OBJECT_ID }}
