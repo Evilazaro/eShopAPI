@@ -3,7 +3,7 @@ version: '3.4'
 services:
   eshopapi:
     container_name: eshopapi
-    image: creshopakscluster3fv4pryin522u.azurecr.io/eshop/eshop-api:linux-latest
+    image: creshop.azurecr.io/eshop/eshop-api:linux-latest
     build:
       context: .
       dockerfile: eShopAPI/Dockerfile

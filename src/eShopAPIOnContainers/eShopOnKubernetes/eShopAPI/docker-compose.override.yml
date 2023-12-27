@@ -1,51 +1,17 @@
 version: '3.4'
 
 services:
-  eshopdb:
-    container_name: eshopdb
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    secrets:
-      - dbpassword
-    networks:
-      - eshopnet
-    ports:
-      - "1433:1433"
-    environment:
-      - MSSQL_SA_PASSWORD=123#@!qweEWQ
-      - ACCEPT_EULA=Y
-      - MSSQL_DATA_DIR=/var/opt/sqlserver/data
-      - MSSQL_LOG_DIR=/var/opt/sqlserver/log
-      - MSSQL_BACKUP_DIR=/var/opt/sqlserver/backup
-    volumes:
-      - sqlsystem:/var/opt/mssql/
-      - sqldata:/var/opt/sqlserver/data
-      - sqllog:/var/opt/sqlserver/log
-      - sqlbackup:/var/opt/sqlserver/backup
-    healthcheck:
-      test: "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '123#@!qweEWQ' -Q 'SELECT @@VERSION'"
-      interval: 5s
-      timeout: 60s
-      retries: 10
-      start_period: 30s
-    #command: "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '123#@!qweEWQ' -Q 'CREATE DATABASE eShopDB'"
-  
   eshopapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
       - CONNECTIONSTRING=./data/dbpassword
+      - ASPNETCORE_HTTP_PORTS=8080
     secrets:
       - dbpassword 
     networks:
       - eshopnet
     ports:
-      - 5000:8080
- #   volumes:
- #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
- #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-    depends_on:
-      - eshopdb
-    command: "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '123#@!qweEWQ' -Q 'CREATE DATABASE eShopDB'"
+      - 8080:8080
 
 networks:
   eshopnet:

@@ -34,11 +34,22 @@ echo ""
 # Building docker image
 echo "Building Docker Image"
 az acr login --name creshop
-docker build ../../../eShopAPI/. -t creshop.azurecr.io/eshop/eshop-api:linux-latest
+docker-compose -f ../../../docker-compose.yml build
+docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
 
+clear
+echo "Docker image has been pushed to the ACR Repository"
+echo ""
+echo ""
+echo ""
+echo ""
 # Get credentials for your new AKS cluster & login (interactive)
 echo "Getting AKS credentials and logging in..."
-az aks get-credentials -g eShop-Solution-rg -n aks-eShop-AKS-Cluster
+az aks get-credentials -g eShop-rg -n aks-eShop
 kubectl get nodes
+
+clear
+echo "Deploying eShopAPI to Azure Kubernetes Services"
+kubectl apply -f ../SharedResources/. -f ../.
 
 echo "Script execution complete."

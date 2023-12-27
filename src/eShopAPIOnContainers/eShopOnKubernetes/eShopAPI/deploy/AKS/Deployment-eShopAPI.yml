@@ -4,7 +4,7 @@ metadata:
   name: eshopapi-deployment
   namespace: eshop
 spec:
-  replicas: 50
+  replicas: 1
   selector:
     matchLabels:
       app: eshop-api
@@ -15,18 +15,15 @@ spec:
     spec:
       containers:
       - name: eshop-api
-        image: ecreshop.azurecr.io/eshop/eshop-api:linux-latest
+        image: eshop/eshop-api:linux-latest
         resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
-        - containerPort: 80
+          - containerPort: 8080
         env:
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
           - name: ASPNETCORE_HTTP_PORTS
-            value: "80"
+            value: "8080"
         envFrom:
           - secretRef:
               name: eshop-secret
