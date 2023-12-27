@@ -30,4 +30,3 @@ jobs:
     - name: Build eShop API Docker image
       working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
       run: docker-compose build
-    - uses: Azure/aCR
