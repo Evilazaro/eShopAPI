@@ -39,6 +39,7 @@ jobs:
               ingressApplicationGateway=true
   
   build-eshop-api-docker-image:
+    needs: eshop-cloud-resources-provisioning
     runs-on: ubuntu-latest
     steps:
       - name: Build eShop API Docker image
@@ -54,3 +55,4 @@ jobs:
           inlineScript: |
             az acr login --name creshop --expose-token
             docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
+    
