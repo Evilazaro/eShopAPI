@@ -3,7 +3,7 @@ version: '3.4'
 services:
   eshopapi:
     container_name: eshopapi
-    image: ${REGISTRY:-eshop}/eshop-api:${PLATFORM:-linux}-${TAG:-latest}
+    image: eshop/eshop-api:linux-latest
     build:
       context: .
       dockerfile: eShopAPI/Dockerfile

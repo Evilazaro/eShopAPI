@@ -1,17 +1,10 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: eshop
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eshopapi-deployment
   namespace: eshop
 spec:
-  replicas: 150
+  replicas: 1
   selector:
     matchLabels:
       app: eshop-api
@@ -22,7 +15,7 @@ spec:
     spec:
       containers:
       - name: eshop-api
-        image: eshop/eshop.api:linux-latest
+        image: eshop/eshop-api:linux-latest
         resources:
           limits:
             memory: "128Mi"
