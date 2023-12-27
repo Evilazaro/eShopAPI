@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  eshopapi:
+    container_name: eshopapi
+    image: eshop/eshopapi:latest
+    build:
+      context: .
+      dockerfile: eShopAPI/Dockerfile
