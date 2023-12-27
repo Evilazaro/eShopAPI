@@ -123,7 +123,7 @@ jobs:
       run: |
         echo "Creating deployment ${{ inputs.resourceName }} using params $templateParams and AKSC ${{ inputs.templateVersion }}"
 
-        DeployOut=($(az deployment group create -g ${{ inputs.rg }} -n ${{ inputs.resourceName }} --template-uri https://github.com/Azure/AKS-Construction/releases/download/${{ inputs.templateVersion }}/main.json --query "[properties.outputs.aksClusterName.value,properties.outputs.containerRegistryName.value]" -o tsv --parameters ${{ inputs.templateParamFile}} automatedDeployment=true $templateParams))
+        DeployOut=($(az deployment group create -g ${{ inputs.rg }} -n ${{ inputs.resourceName }} --template-uri https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/AzureResources/main.json --query "[properties.outputs.aksClusterName.value,properties.outputs.containerRegistryName.value]" -o tsv --parameters ${{ inputs.templateParamFile}} automatedDeployment=true $templateParams))
 
         aksClusterName=${DeployOut[0]}
         containerRegistryName=${DeployOut[1]}
