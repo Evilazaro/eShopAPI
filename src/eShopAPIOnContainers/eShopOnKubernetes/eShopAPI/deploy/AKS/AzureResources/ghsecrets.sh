@@ -11,7 +11,7 @@ subId=$(az account show --query id -o tsv)
 
 # Assign the 'Owner' role to the Service Principal
 echo "Assigning 'Owner' role to the Service Principal..."
-az role assignment create --role owner --assignee-object-id $spId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subId/resourceGroups/eShop-Solution-rg
+az role assignment create --role owner --assignee-object-id $spId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subId/
 
 # Create a new federated identity credential
 echo "Creating a new federated identity credential..."
