@@ -1,4 +1,4 @@
-name: Deploy AKS on Azure
+name: Deploy eShop to AKS on Azure
 
 on:
   workflow_dispatch:
@@ -9,10 +9,10 @@ permissions:
 
 jobs:
   reusable_workflow_job:
-    uses: Azure/AKS-Construction/.github/workflows/AKSC_Deploy.yml@0.10.3
+    uses: Evilazaro/eShopAPI/.github/workflows/AKSC_Deploy.yml@0.10.3
     with:
       templateVersion: 0.10.3
-      rg: eShop-Solution-rg
+      rg: eShop-rg
       resourceName: eShop-AKS-Cluster
       templateParams: resourceName=eShop-AKS-Cluster upgradeChannel=stable SystemPoolType=Standard agentCountMax=20 osDiskType=Managed osDiskSizeGB=32 registries_sku=Premium acrPushRolePrincipalId=_USER_OBJECT_ID_ omsagent=true retentionInDays=30 maxPods=238 ingressApplicationGateway=true
     secrets:

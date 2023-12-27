@@ -4,7 +4,7 @@ metadata:
   name: eshopapi-deployment
   namespace: eshop
 spec:
-  replicas: 1
+  replicas: 50
   selector:
     matchLabels:
       app: eshop-api
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: eshop-api
-        image: eshop/eshop-api:linux-latest
+        image: ecreshop.azurecr.io/eshop/eshop-api:linux-latest
         resources:
           limits:
             memory: "128Mi"

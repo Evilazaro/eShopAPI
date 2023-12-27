@@ -6,11 +6,11 @@ az login
 
 # Create Resource Group
 echo "Creating Resource Group..."
-az group create -l EastUS2 -n eShop-Solution-rg
+az group create -l EastUS2 -n eShop-rg
 
 # Deploy template with in-line parameters
 echo "Deploying Azure Resource..."
-az deployment group create -g eShop-Solution-rg --template-uri https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/AzureResources/main.json --parameters \
+az deployment group create -g eShop-rg --template-uri https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/AzureResources/main.json --parameters \
     resourceName=eShop \
     upgradeChannel=stable \
     SystemPoolType=Standard \
@@ -24,30 +24,17 @@ az deployment group create -g eShop-Solution-rg --template-uri https://raw.githu
     maxPods=238 \
     ingressApplicationGateway=true
 
+clear
+echo "AKS has been deployed successfuly"
+echo ""
+echo ""
+echo ""
+echo ""
+
 # Building docker image
-az acr login --name crakseshop
-docker build .../eShopAPI/. -t crakseshop.azurecr.io/eshop/eshop-api:linux-latest
-
-# Create Azure Active Directory (Azure AD) Application and Service Principal
-echo "Creating Azure AD Application and Service Principal..."
-app=($(az ad app create --display-name eShopAPI --query "[appId,id]" -o tsv | tr ' ' "\n"))
-spId=$(az ad sp create --id ${app[0]} --query id -o tsv)
-subId=$(az account show --query id -o tsv)
-
-# Assign the 'Owner' role to the Service Principal
-echo "Assigning 'Owner' role to the Service Principal..."
-az role assignment create --role owner --assignee-object-id $spId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subId/resourceGroups/eShop-Solution-rg
-
-# Create a new federated identity credential
-echo "Creating a new federated identity credential..."
-az rest --method POST --uri "https://graph.microsoft.com/beta/applications/${app[1]}/federatedIdentityCredentials" --body "{\"name\":\"eShopAPI-main-gh\",\"issuer\":\"https://token.actions.githubusercontent.com\",\"subject\":\"repo:Evilazaro/eShopAPI:ref:refs/heads/main\",\"description\":\"Access to branch main\",\"audiences\":[\"api://AzureADTokenExchange\"]}"
-
-# Set Secrets using GitHub CLI (gh)
-echo "Setting Secrets in GitHub repository..."
-gh secret set --repo https://github.com/Evilazaro/eShopAPI AZURE_CLIENT_ID -b ${app[0]}
-gh secret set --repo https://github.com/Evilazaro/eShopAPI AZURE_TENANT_ID -b $(az account show --query tenantId -o tsv)
-gh secret set --repo https://github.com/Evilazaro/eShopAPI AZURE_SUBSCRIPTION_ID -b $subId
-gh secret set --repo https://github.com/Evilazaro/eShopAPI USER_OBJECT_ID -b $spId
+echo "Building Docker Image"
+az acr login --name creshop
+docker build ../../../eShopAPI/. -t creshop.azurecr.io/eshop/eshop-api:linux-latest
 
 # Get credentials for your new AKS cluster & login (interactive)
 echo "Getting AKS credentials and logging in..."
