@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eshopapi-deployment
+  namespace: eshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eshop-api
+  template:
+    metadata:
+      labels:
+        app: eshop-api
+    spec:
+      containers:
+      - name: eshop-api
+        image: eshop/eshop-api:linux-latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+          - name: ASPNETCORE_HTTP_PORTS
+            value: "80"
+        envFrom:
+          - secretRef:
+              name: eshop-secret
