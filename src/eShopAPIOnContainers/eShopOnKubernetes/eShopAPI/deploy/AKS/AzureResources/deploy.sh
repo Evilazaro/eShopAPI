@@ -10,8 +10,8 @@ az group create -l EastUS2 -n eShop-Solution-rg
 
 # Deploy template with in-line parameters
 echo "Deploying Azure Resource..."
-az deployment group create -g eShop-Solution-rg --template-uri https://github.com/Azure/AKS-Construction/releases/download/0.10.3/main.json --parameters \
-    resourceName=eShop-AKS-Cluster \
+az deployment group create -g eShop-Solution-rg --template-uri https://raw.githubusercontent.com/Evilazaro/eShopAPI/main/src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/AzureResources/main.json --parameters \
+    resourceName=eShop \
     upgradeChannel=stable \
     SystemPoolType=Standard \
     agentCountMax=20 \
@@ -23,6 +23,10 @@ az deployment group create -g eShop-Solution-rg --template-uri https://github.co
     retentionInDays=30 \
     maxPods=238 \
     ingressApplicationGateway=true
+
+# Building docker image
+az acr login --name crakseshop
+docker build .../eShopAPI/. -t crakseshop.azurecr.io/eshop/eshop-api:linux-latest
 
 # Create Azure Active Directory (Azure AD) Application and Service Principal
 echo "Creating Azure AD Application and Service Principal..."

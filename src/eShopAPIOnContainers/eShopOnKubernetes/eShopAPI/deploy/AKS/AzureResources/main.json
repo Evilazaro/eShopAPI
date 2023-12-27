@@ -1039,7 +1039,7 @@
     "keyVaultKmsCreateAndPrereqs": "[and(and(parameters('keyVaultKmsCreate'), not(empty(parameters('keyVaultKmsOfficerRolePrincipalId')))), equals(parameters('privateLinks'), false()))]",
     "acrContentTrustEnabled": "[if(and(parameters('enableACRTrustPolicy'), equals(parameters('registries_sku'), 'Premium')), 'enabled', 'disabled')]",
     "acrZoneRedundancyEnabled": "[if(and(not(empty(parameters('availabilityZones'))), equals(parameters('registries_sku'), 'Premium')), 'Enabled', 'Disabled')]",
-    "acrName": "[format('cr{0}{1}', replace(parameters('resourceName'), '-', ''), 'ACR')]",
+    "acrName": "[format('cr{0}', replace(parameters('resourceName'), '-', ''))]",
     "AcrPullRole": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')]",
     "AcrPushRole": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8311e382-0749-4cb8-b61a-304f252e45ec')]",
     "deployAppGw": "[and(parameters('ingressApplicationGateway'), or(parameters('custom_vnet'), not(empty(parameters('byoAGWSubnetId')))))]",
