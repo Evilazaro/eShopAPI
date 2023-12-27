@@ -4,7 +4,7 @@ metadata:
   name: eshopapi-deployment
   namespace: eshop
 spec:
-  replicas: 1
+  replicas: 35
   selector:
     matchLabels:
       app: eshop-api
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: eshop-api
-        image: eshop/eshop-api:linux-latest
+        image: creshop.azurecr.io/eshop/eshop-api:linux-latest
         resources:
         ports:
           - containerPort: 8080

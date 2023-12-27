@@ -1,5 +1,8 @@
 #!/bin/bash
 
+az login
+gh auth login
+
 # Create Azure Active Directory (Azure AD) Application and Service Principal
 echo "Creating Azure AD Application and Service Principal..."
 app=($(az ad app create --display-name eShopAPI --query "[appId,id]" -o tsv | tr ' ' "\n"))

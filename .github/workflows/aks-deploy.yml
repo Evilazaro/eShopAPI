@@ -1,4 +1,4 @@
-name: Deploy eShop to AKS on Azure
+name: AKS Provisioning on Azure
 
 on:
   workflow_dispatch:
@@ -20,3 +20,14 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       USER_OBJECT_ID: ${{ secrets.USER_OBJECT_ID }}
+  
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build eShop API Docker image
+      working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+      run: docker-compose build
+    - uses: Azure/aCR
