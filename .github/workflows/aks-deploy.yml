@@ -38,7 +38,7 @@ jobs:
               maxPods=238 \
               ingressApplicationGateway=true
   
-  build-eshop-api-docker-image:
+  build-and-push-eshop-api-docker-image:
     needs: eshop-cloud-resources-provisioning
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Build eShop API Docker image
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
           run: docker-compose build
@@ -63,8 +63,7 @@ jobs:
             az acr login --name creshop --expose-token
 
       - name: Build eShop API Docker image
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
           run: docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
     
