@@ -9,9 +9,14 @@ app=($(az ad app create --display-name eShopAPI --query "[appId,id]" -o tsv | tr
 spId=$(az ad sp create --id ${app[0]} --query id -o tsv)
 subId=$(az account show --query id -o tsv)
 
+echo "VALORES DAS VARIAVEIS"
+echo $app
+echo $spId
+echo $subId
+
 # Assign the 'Owner' role to the Service Principal
 echo "Assigning 'Owner' role to the Service Principal..."
-az role assignment create --role owner --assignee-object-id $spId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subId/
+az role assignment create --role owner --assignee-object-id $spId --assignee-principal-type ServicePrincipal --scope /subscriptions/$subId
 
 # Create a new federated identity credential
 echo "Creating a new federated identity credential..."
