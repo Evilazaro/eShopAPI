@@ -9,12 +9,13 @@ permissions:
 
 jobs:
   reusable_workflow_job:
-    uses: .github/workflows/AKSC_Deploy.yml@0.10.3
+    uses: actions/workflow_call
+    name: AKSC_Deploy.yml@0.10.3
     with:
       templateVersion: 0.10.3
       rg: eShop-rg
-      resourceName: eShop-AKS-Cluster
-      templateParams: resourceName=eShop-AKS-Cluster upgradeChannel=stable SystemPoolType=Standard agentCountMax=20 osDiskType=Managed osDiskSizeGB=32 registries_sku=Premium acrPushRolePrincipalId=_USER_OBJECT_ID_ omsagent=true retentionInDays=30 maxPods=238 ingressApplicationGateway=true
+      resourceName: aks-eShop
+      templateParams: resourceName=aks-eShop upgradeChannel=stable SystemPoolType=Standard agentCountMax=20 osDiskType=Managed osDiskSizeGB=32 registries_sku=Premium acrPushRolePrincipalId=_USER_OBJECT_ID_ omsagent=true retentionInDays=30 maxPods=238 ingressApplicationGateway=true
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
