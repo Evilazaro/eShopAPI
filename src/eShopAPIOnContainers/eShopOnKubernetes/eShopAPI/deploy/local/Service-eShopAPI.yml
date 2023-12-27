@@ -4,7 +4,6 @@ metadata:
   name: eshopapi-service
   namespace: eshop
 spec:
-  type: LoadBalancer
   selector:
     app: eshop-api
   ports:
