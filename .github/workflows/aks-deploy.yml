@@ -4,29 +4,23 @@ on:
   workflow_dispatch:
 
 permissions:
-      id-token: write
-      contents: read
+  id-token: write
+  contents: read
 
-jobs:
-  reusable_workflow_job:
-    uses: Evilazaro/eShopAPI/.github/workflows/AKSC_Deploy.yml@0.10.3
-    with:
-      templateVersion: 0.10.3
-      rg: eShop-rg
-      resourceName: aks-eShop
-      templateParams: resourceName=aks-eShop upgradeChannel=stable SystemPoolType=Standard agentCountMax=20 osDiskType=Managed osDiskSizeGB=32 registries_sku=Premium acrPushRolePrincipalId=_USER_OBJECT_ID_ omsagent=true retentionInDays=30 maxPods=238 ingressApplicationGateway=true
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      USER_OBJECT_ID: ${{ secrets.USER_OBJECT_ID }}
-  
-  build:
-
+jobs: 
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build eShop API Docker image
-      working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
-      run: docker-compose build
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
