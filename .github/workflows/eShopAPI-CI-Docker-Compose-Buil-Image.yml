@@ -11,16 +11,16 @@ jobs:
   build-application:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
       - name: Restore dependencies
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/
         run: dotnet restore eShopAPI.csproj
       - name: Build eShop API
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/
         run: dotnet build eShopAPI.csproj --no-restore
           
   build-and-push-eshop-api-docker-image:
@@ -66,4 +66,4 @@ jobs:
             az aks get-credentials --resource-group eShop-rg --name aks-eShop
       - name: Deploy eShop API to Azure Kubernetes Services
         run: | 
-          kubectl apply -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources/. -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/.
+          kubectl apply -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/deploy/AKS/SharedResources/. -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/deploy/AKS/.
