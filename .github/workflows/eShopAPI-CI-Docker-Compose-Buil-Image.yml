@@ -7,6 +7,10 @@ on:
     branches: [ "dev" ]
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-application:
     runs-on: ubuntu-latest
