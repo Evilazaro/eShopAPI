@@ -15,11 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+    - name: Display dotnet version
+      run: dotnet --version
     - name: Restore dependencies
       working-directory: ./src/eShopLocalVSDev/eShopAPI/
       run: dotnet restore eShopAPI.csproj
@@ -28,4 +30,9 @@ jobs:
       run: dotnet build eShopAPI.csproj --no-restore
     - name: Test eShop API
       working-directory: ./src/eShopLocalVSDev/eShopAPITests/
-      run: dotnet test eShopAPITests.csproj --no-build --verbosity normal
+      run: dotnet test --logger trx --results-directory "TestResults-8.0"
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-8.0
+        path: TestResults-8.0
