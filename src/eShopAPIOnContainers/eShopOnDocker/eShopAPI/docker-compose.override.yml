@@ -6,8 +6,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - CONNECTIONSTRING=./data/dbpassword
       - ASPNETCORE_HTTP_PORTS=8080
-    secrets:
-      - dbpassword 
     networks:
       - eshopnet
     ports:

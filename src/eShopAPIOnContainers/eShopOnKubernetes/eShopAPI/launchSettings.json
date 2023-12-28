@@ -7,8 +7,7 @@
       "composeLaunchServiceName": "eshopapi",
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
       "serviceActions": {
-        "eshopapi": "StartDebugging",
-        "eshopDb": "StartWithoutDebugging"
+        "eshopapi": "StartDebugging"
       },
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
