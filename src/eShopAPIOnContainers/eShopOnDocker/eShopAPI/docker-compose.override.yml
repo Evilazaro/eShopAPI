@@ -17,18 +17,3 @@ networks:
   eshopnet:
     name: eshopnet
     driver: bridge
-    
-volumes:
-  sqlsystem:
-    name: sqlsystem  
-  sqldata:
-    name: sqldata
-  sqllog:
-    name: sqllog
-  sqlbackup:
-    name: sqlbackup
-
-secrets:
-  dbpassword:
-    name: dbpassword
-    file: ./data/dbpassword.txt
