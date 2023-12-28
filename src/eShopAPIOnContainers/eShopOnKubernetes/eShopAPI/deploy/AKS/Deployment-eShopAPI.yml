@@ -4,7 +4,7 @@ metadata:
   name: eshopapi-deployment
   namespace: eshop
 spec:
-  replicas: 200
+  replicas: 50
   selector:
     matchLabels:
       app: eshop-api
