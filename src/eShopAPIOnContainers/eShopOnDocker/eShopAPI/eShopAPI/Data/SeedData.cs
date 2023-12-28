@@ -35,7 +35,7 @@ namespace eShopAPI.Data
       .RuleFor(o => o.Id, f => Guid.NewGuid())
       .RuleFor(o => o.Name, f => f.Commerce.Categories(1).First())
       .RuleFor(o => o.Description, f => f.Lorem.Paragraph());
-            return demoCategories.Generate(1000);
+            return demoCategories.Generate(100);
         }
         private static IEnumerable<Product> GetProducts()
         {
@@ -49,7 +49,7 @@ namespace eShopAPI.Data
       .RuleFor(o => o.ProductCategoryId, f => f.PickRandom<Guid>(categoryIds))
       ;
 
-            return demoProducts.Generate(10000);
+            return demoProducts.Generate(1000);
 
         }
         private static IEnumerable<PriceHistory> GetPriceHistories()
@@ -78,7 +78,7 @@ namespace eShopAPI.Data
       .RuleFor(o => o.ProductId, f => f.PickRandom<Guid>(productIds))
       ;
 
-            return demoRankHistory.Generate(9000);
+            return demoRankHistory.Generate(10000);
 
         }
 
