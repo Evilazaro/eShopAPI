@@ -64,8 +64,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy eShop API to Azure Kubernetes Services
-        uses: azure/setup-kubectl@v2.0
-      
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az acr login --name creshop
+            az aks get-credentials --resource-group eShop-rg --name aks-eShop        
+      - uses: azure/setup-kubectl@v2.0      
       - uses: Azure/k8s-deploy@v4
         with:
            manifests: |
