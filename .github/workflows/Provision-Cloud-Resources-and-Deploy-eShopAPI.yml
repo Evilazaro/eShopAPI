@@ -56,7 +56,7 @@ jobs:
               ingressApplicationGateway=true
 
   build-and-push-eshop-api-docker-image:
-    needs: build-application
+    needs: cloud-resources-provisioning
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
