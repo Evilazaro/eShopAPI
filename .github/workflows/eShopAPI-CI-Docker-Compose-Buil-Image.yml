@@ -31,14 +31,14 @@ jobs:
     needs: build-application
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -54,24 +54,18 @@ jobs:
     needs: build-and-push-eshop-api-docker-image
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Azure login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Get AKS Credentials
+      - name: Deploy eShop API to Azure Kubernetes Services
         uses: azure/CLI@v1
         with:
-          azcliversion: latest
+          azcliversion: latest 
           inlineScript: |
             az aks get-credentials --resource-group eShop-rg --name aks-eShop
-      - name: Deploy eShop API to Azure Kubernetes Services
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
-        run: | 
-          kubectl apply -f ./SharedResources/Namespace-eShop.yml
-          kubectl apply -f ./SharedResources/Secret-eShopAPI.yml
-          kubectl apply -f ./Deployment-eShopAPI.yml
-          kubectl apply -f ./Service-eShopAPI.yml
+            kubectl apply -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources/. -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/.
