@@ -23,9 +23,9 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
       - name: Build eShop API Docker image
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
         run: | 
-          docker-compose -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/. build
-          az acr login -n creshop
+          docker-compose build
 
   # eshop-cloud-resources-provisioning:
   #   runs-on: ubuntu-latest
