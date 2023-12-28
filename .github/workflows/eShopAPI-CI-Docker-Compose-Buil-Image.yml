@@ -35,7 +35,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Azure login
-        uses: azure/login@v1
+        uses: azure/login@v1.4.3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -58,26 +58,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Azure login
-        uses: azure/login@v1
+        uses: azure/login@v1.4.3
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: Deploy eShop API to Azure Kubernetes Services
-        uses: azure/CLI@v1
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
         with:
-          azcliversion: latest
-          inlineScript: |
-            az acr login --name creshop --expose-token
-            az aks get-credentials --resource-group eShop-rg --name aks-eShop        
-      - uses: azure/setup-kubectl@v2.0      
-      - uses: Azure/k8s-deploy@v4
+          resource-group: '${{ secrets.resource_group }}' 
+          cluster-name: '${{ secrets.cluster_name }}'
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Deploy Shared Resources to AKS
+        id: deploy-resources-aks
+        uses: Azure/k8s-deploy@v4
         with:
-           manifests: |
+          namespace: 'default'
+          manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
-            ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
-      - uses: Azure/k8s-deploy@v4
+      - name: Deploy eShop API to AKS
+        id: deploy-app-aks
+        uses: Azure/k8s-deploy@v4
         with:
-            namespace: eshop
-            manifests: |
-              ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
+          namespace: 'eshop'
+          manifests: |
+            ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
