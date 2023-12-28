@@ -1,13 +1,13 @@
 using eShopAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRING");
 
+// Add services to the container.
 builder.Services.AddDbContext<StoreDBContext>(OptionsBuilderConfigurationExtensions =>
     OptionsBuilderConfigurationExtensions.UseInMemoryDatabase("storedb"));
 
-// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,6 +20,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetService<StoreDBContext>().Database.EnsureCreated();
 }
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -28,7 +29,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
