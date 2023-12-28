@@ -1,4 +1,4 @@
-name: eShop - Provision Cloud Resources and Deploy eShop API
+name: Provision Cloud Resources and Deploy eShop API
 
 on:
   workflow_dispatch:
@@ -8,7 +8,21 @@ permissions:
   contents: read
 
 jobs:
+  build-application:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and Push eShop API Docker image to Azure Container Registry
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        run: | 
+          docker-compose build
+          
   cloud-resources-provisioning:
+    needs: build-application
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
@@ -71,6 +85,8 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Get AKS Credentials
         uses: azure/CLI@v1
         with:
