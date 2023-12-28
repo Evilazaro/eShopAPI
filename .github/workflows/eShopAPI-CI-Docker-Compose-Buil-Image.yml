@@ -10,6 +10,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  actions: read
 
 jobs:
   build-application:
@@ -63,9 +64,10 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy eShop API to Azure Kubernetes Services
-        uses: azure/CLI@v1
+        uses: azure/setup-kubectl@v2.0
+      
+      - uses: Azure/k8s-deploy@v4
         with:
-          azcliversion: latest 
-          inlineScript: |
-            az aks get-credentials --resource-group eShop-rg --name aks-eShop
-            kubectl get nodes
+           manifests: |
+            ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
+            ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
