@@ -71,4 +71,7 @@ jobs:
       - name: Deploy eShop API to Azure Kubernetes Services
         working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
         run: | 
-          kubectl apply -f ./SharedResources/. -f .
+          kubectl apply -f ./SharedResources/Namespace-eShop.yml
+          kubectl apply -f ./SharedResources/Secret-eShopAPI.yml
+          kubectl apply -f ./Deployment-eShopAPI.yml
+          kubectl apply -f ./Service-eShopAPI.yml
