@@ -69,5 +69,6 @@ jobs:
           inlineScript: |
             az aks get-credentials --resource-group eShop-rg --name aks-eShop
       - name: Deploy eShop API to Azure Kubernetes Services
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
         run: | 
-          kubectl apply -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/deploy/AKS/SharedResources/. -f ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI/deploy/AKS/.
+          kubectl apply -f ./SharedResources/. -f .
