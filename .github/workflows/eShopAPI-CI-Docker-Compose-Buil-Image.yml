@@ -76,3 +76,8 @@ jobs:
            manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
+      - uses: Azure/k8s-deploy@v4
+        with:
+            namespace: eshop
+            manifests: |
+              ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
