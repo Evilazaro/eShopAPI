@@ -10,13 +10,13 @@ ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
 COPY . .
 
-RUN dotnet restore "./eShopAPI/eShopAPI.csproj"
-RUN dotnet build "./eShopAPI/eShopAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet restore "./eShopAPI.csproj"
+RUN dotnet build "./eShopAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 RUN dotnet test "./eShopAPITests/eShopAPITests.csproj" --logger trx --results-directory "TestResults-8.0"
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Debug
-RUN dotnet publish "./eShopAPI/eShopAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./eShopAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
