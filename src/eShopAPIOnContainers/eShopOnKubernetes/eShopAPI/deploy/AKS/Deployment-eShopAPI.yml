@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: eshop-api
-        image: 
+        image: creshop.azurecr.io/eshop/eshop-api:v1
         resources:
         ports:
           - containerPort: 8080
