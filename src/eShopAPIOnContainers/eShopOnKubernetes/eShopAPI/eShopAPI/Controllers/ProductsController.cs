@@ -32,22 +32,6 @@ namespace eShopAPI.Controllers
             }).ToListAsync();
         }
 
-        // GET: api/Products
-        [HttpGet]
-        [Route("GetProducts2")]
-        public async Task<ActionResult<IEnumerable<ProductViewModel>>> GetProducts2()
-        {
-            return await _context.Products.Select(p => new ProductViewModel
-            {
-                CategoryId = p.ProductCategoryId,
-                CategoryName = p.ProductCategory.Name,
-                Name = p.Name,
-                Description = p.Description,
-                Price = p.Price,
-                Id = p.Id
-            }).ToListAsync();
-        }
-
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductViewModel>> GetProduct(Guid id)
