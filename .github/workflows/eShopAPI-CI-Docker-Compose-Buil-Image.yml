@@ -1,5 +1,8 @@
 name: eShop API CI - Docker Compose Buil Image
 
+env:
+  IMAGE_TAG: ''
+
 on:
   push:
     branches: [ "main" ]
@@ -50,7 +53,10 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Creates the Image TAG
-        run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        #run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: |
+          IMAGE_TAG=$(date +'%Y%m%d%H%M%S')
+          echo "VALOR DA VARIAVEL IMAGE_TAG:${{ env.IMAGE_TAG }}"
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -92,7 +98,7 @@ jobs:
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
       - name: Printing the IMAGE_TAG
-        run: echo ${IMAGE_TAG}
+        run: echo ${{ env.IMAGE_TAG }}
       - name: Deploy eShop API to AKS
         id: deploy-app-aks  
         uses: Azure/k8s-deploy@v4
