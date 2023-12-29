@@ -3,7 +3,7 @@ version: '3.4'
 services:
   eshopapi:
     container_name: eshopapi
-    image: creshop.azurecr.io/eshop/eshop-api:$IMAGETAG
+    image: creshop.azurecr.io/eshop/eshop-api:${IMAGETAG}
     build:
       context: .
       dockerfile: eShopAPI/Dockerfile
