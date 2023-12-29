@@ -96,7 +96,10 @@ jobs:
         uses: Azure/k8s-deploy@v4
         env:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
+        run: |
+          echo "VARIÁVEIS CRIADAS : s/{IMAGE_TAG}/$IMAGE_TAG/g"
         with:
           namespace: 'eshop'
+            IMAGE_TAG: ${{ env.IMAGE_TAG }}
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
