@@ -60,7 +60,7 @@ jobs:
           docker-compose build
 
           az acr login --name creshop
-          docker creshop.azurecr.io/eshop/eshop-api:$IMAGETAG
+          docker push creshop.azurecr.io/eshop/eshop-api:$IMAGETAG
 
   #comment
   deploy-eshop-api-to-azure-kubernetes-service:
