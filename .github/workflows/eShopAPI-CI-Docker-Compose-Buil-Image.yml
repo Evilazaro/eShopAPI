@@ -3,8 +3,7 @@ name: eShop API CI - Docker Compose Buil Image
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "dev" ]
+
   workflow_dispatch:
 
 permissions:
@@ -24,13 +23,13 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       - name: Restore dependencies
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI
         run: dotnet restore eShopAPI.csproj
       - name: Build eShop API
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI
         run: dotnet build eShopAPI.csproj --no-restore
       - name: Test eShop API
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI
         run: dotnet test --logger trx --results-directory "TestResults-8.0"
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v3
@@ -54,7 +53,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
       - name: Build and Push eShop API Docker image to Azure Container Registry
-        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI
         run: | 
           docker-compose build
 
