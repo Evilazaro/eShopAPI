@@ -50,7 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Creates the Image TAG
-        run: echo "IMAGETAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -60,7 +60,7 @@ jobs:
           docker-compose build
 
           az acr login --name creshop
-          docker push creshop.azurecr.io/eshop/eshop-api:${IMAGETAG}
+          docker push creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
 
   #comment
   deploy-eshop-api-to-azure-kubernetes-service:
@@ -92,11 +92,10 @@ jobs:
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
       - name: Deploy eShop API to AKS
-        id: deploy-app-aks
+        id: deploy-app-aks  
         uses: Azure/k8s-deploy@v4
-        env:
-          IMAGETAG: ${IMAGETAG}
         with:
           namespace: 'eshop'
+          images: creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
