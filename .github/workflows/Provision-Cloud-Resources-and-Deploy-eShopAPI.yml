@@ -86,7 +86,7 @@ jobs:
           docker-compose build
 
           az acr login --name creshop
-          docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
+          docker push creshop.azurecr.io/eshop/eshop-api:latest
 
   deploy-eshop-api-to-azure-kubernetes-service:
     needs: build-and-push-eshop-api-docker-image
