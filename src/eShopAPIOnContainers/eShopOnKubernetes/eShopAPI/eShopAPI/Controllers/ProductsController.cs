@@ -34,6 +34,7 @@ namespace eShopAPI.Controllers
 
         // GET: api/Products
         [HttpGet]
+        [Route("GetProducts2")]
         public async Task<ActionResult<IEnumerable<ProductViewModel>>> GetProducts2()
         {
             return await _context.Products.Select(p => new ProductViewModel
