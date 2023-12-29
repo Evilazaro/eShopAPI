@@ -94,10 +94,10 @@ jobs:
       - name: Deploy eShop API to AKS
         id: deploy-app-aks  
         uses: Azure/k8s-deploy@v4
+        env:
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
         with:
           namespace: 'eshop'
-          images: |
-            creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
           pull-images: true
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
