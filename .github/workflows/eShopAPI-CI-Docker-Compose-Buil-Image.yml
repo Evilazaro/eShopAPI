@@ -70,15 +70,6 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
-      - name: Deploy Shared Resources to AKS
-        id: deploy-resources-aks
-        uses: Azure/k8s-deploy@v4
-        with:
-          namespace: 'default'
-          manifests: |
-            ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
-      - name: Printing the IMAGE_TAG
-        run: echo ${{ env.IMAGE_TAG }}
       - name: Deploy eShop API to AKS
         id: deploy-app-aks  
         uses: Azure/k8s-deploy@v4
@@ -86,5 +77,7 @@ jobs:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         with:
           namespace: 'eshop'
+          images: |
+            creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
