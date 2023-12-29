@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
       - name: eshop-api
+        image: 
         resources:
         ports:
           - containerPort: 8080
