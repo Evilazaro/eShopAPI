@@ -35,7 +35,7 @@ echo ""
 echo "Building Docker Image"
 az acr login --name creshop
 docker-compose -f ../../../docker-compose.yml build
-docker push creshop.azurecr.io/eshop/eshop-api:linux-latest
+docker push creshop.azurecr.io/eshop/eshop-api:latest
 
 clear
 echo "Docker image has been pushed to the ACR Repository"
