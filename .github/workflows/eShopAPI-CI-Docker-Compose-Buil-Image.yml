@@ -50,7 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Create the Image TAG
-        run: echo "IMAGE_TAG=v$GITHUB_RUN_NUMBER.$(date +'%Y').$(date +'%m%d').$(date +'%H%M')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=v$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -75,7 +75,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Create the Image TAG
-        run: echo "IMAGE_TAG=v$GITHUB_RUN_NUMBER.$(date +'%Y').$(date +'%m%d').$(date +'%H%M')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=v$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
