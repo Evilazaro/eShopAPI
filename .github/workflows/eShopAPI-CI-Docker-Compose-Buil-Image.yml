@@ -91,15 +91,14 @@ jobs:
           namespace: 'default'
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/SharedResources
+      - name: Printing the IMAGE_TAG
+        run: echo ${{ env.IMAGE_TAG }}
       - name: Deploy eShop API to AKS
         id: deploy-app-aks  
         uses: Azure/k8s-deploy@v4
         env:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
-        run: |
-          echo "VARIÁVEIS CRIADAS : s/{IMAGE_TAG}/$IMAGE_TAG/g"
         with:
           namespace: 'eshop'
-            IMAGE_TAG: ${{ env.IMAGE_TAG }}
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
