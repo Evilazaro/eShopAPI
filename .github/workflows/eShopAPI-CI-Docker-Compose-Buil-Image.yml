@@ -1,8 +1,5 @@
 name: eShop API CI - Docker Compose Buil Image
 
-env:
-  IMAGE_TAG: "VALOR INICIAL"
-
 on:
   push:
     branches: [ "main" ]
@@ -40,7 +37,7 @@ jobs:
           name: dotnet-results-8.0
           path: TestResults-8.0
           
-  build-and-push-eshop-api-docker-image:
+  build-push-and-deploy-eshop-api-to-aks:
     needs: build-application
     runs-on: ubuntu-latest
     steps:
@@ -53,10 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Create the Image TAG
-        #run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-        run: |
-          IMAGE_TAG=$(date +'%Y%m%d%H%M%S')
-          echo "VALOR DA VARIAVEL IMAGE_TAG:${{ env.IMAGE_TAG }}"
+        run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -67,14 +61,8 @@ jobs:
 
           az acr login --name creshop
           docker push creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
-
-  #comment
-  deploy-eshop-api-to-azure-kubernetes-service:
-    needs: build-and-push-eshop-api-docker-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+          - name: Checkout code
+          uses: actions/checkout@v4
       - name: Azure login
         uses: azure/login@v1.4.3
         with:
