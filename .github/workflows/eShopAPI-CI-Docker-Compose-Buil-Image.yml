@@ -2,7 +2,7 @@ name: eShop API CI - Docker Compose Buil Image
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "dev" ]
   workflow_dispatch:
