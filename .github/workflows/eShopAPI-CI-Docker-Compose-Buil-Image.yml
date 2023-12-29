@@ -50,7 +50,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Create the Image TAG
-        run: echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=v1.$(date +'%Y').$(date +'%m%d').$(date +'%H%M%S')" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -61,8 +61,8 @@ jobs:
 
           az acr login --name creshop
           docker push creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
-          - name: Checkout code
-          uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Azure login
         uses: azure/login@v1.4.3
         with:
