@@ -37,7 +37,7 @@ jobs:
           name: dotnet-results-8.0
           path: TestResults-8.0
           
-  build-push-and-deploy-eshop-api-to-aks:
+  build-push-app-docker-image-to-acr:
     needs: build-application
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,32 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Create the Image TAG
-        run: echo "IMAGE_TAG=v1.$(date +'%Y').$(date +'%m%d').$(date +'%H%M%S')" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=v${{ env.GITHUB_RUN_NUMBER}}.$(date +'%Y').$(date +'%m%d').$(date +'%H%M')" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and Push eShop API Docker image to Azure Container Registry
+        working-directory: ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/eShopAPI
+        run: | 
+          docker-compose build
+
+          az acr login --name creshop
+          docker push creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
+
+  build-push-and-deploy-eshop-api-to-aks:
+    needs: build-push-app-docker-image-to-acr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Azure login
+        uses: azure/login@v1.4.3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Create the Image TAG
+        run: echo "IMAGE_TAG=v${{ env.GITHUB_RUN_NUMBER}}.$(date +'%Y').$(date +'%m%d').$(date +'%H%M')" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
