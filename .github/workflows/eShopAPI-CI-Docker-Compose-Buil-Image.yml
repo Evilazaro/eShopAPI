@@ -98,6 +98,5 @@ jobs:
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         with:
           namespace: 'eshop'
-          pull-images: true
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
