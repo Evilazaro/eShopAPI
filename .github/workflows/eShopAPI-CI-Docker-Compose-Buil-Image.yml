@@ -97,5 +97,6 @@ jobs:
         with:
           namespace: 'eshop'
           images: creshop.azurecr.io/eshop/eshop-api:${{ env.IMAGE_TAG }}
+          pull-images: true
           manifests: |
             ./src/eShopAPIOnContainers/eShopOnKubernetes/eShopAPI/deploy/AKS/
