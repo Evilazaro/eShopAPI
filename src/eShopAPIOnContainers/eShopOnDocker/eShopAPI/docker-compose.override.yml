@@ -4,13 +4,13 @@ services:
   sqlDb:
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=123#@!qweEWQ
+      - SA_PASSWORD=P@ssw0rd
     networks:
       - eshopnet
     ports:
-      - 1433:1433
+      - 6060:1433
     volumes:
-      - eshop-sqldata:/var/opt/mssql/data
+      - eshopapi-sqldata:/var/opt/mssql
   eshopapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -27,6 +27,6 @@ networks:
     driver: bridge
 
 volumes:
-  eshop-sqldata:
-    name: eshop-sqldata
+  eshopapi-sqldata:
+    name: eshopapi-sqldata
     external: false
