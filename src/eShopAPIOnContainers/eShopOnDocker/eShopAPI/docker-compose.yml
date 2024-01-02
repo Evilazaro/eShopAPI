@@ -1,9 +1,15 @@
 version: '3.4'
 
 services:
+  sqlDb:
+    container_name: sqlDb
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+
   eshopapi:
     container_name: eshopapi
     image: eshop/eshopapi:linux-latest
     build:
       context: .
       dockerfile: eShopAPI/Dockerfile
+    depends_on:
+      - sqlDb
