@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Extensions.AddServiceDefaults(builder);
+
 // Add services to the container.
 builder.Services.AddDbContext<StoreDBContext>(OptionsBuilderConfigurationExtensions =>
     OptionsBuilderConfigurationExtensions.UseInMemoryDatabase("storedb"));
