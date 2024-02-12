@@ -21,11 +21,12 @@ namespace eShopAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryViewModel>>> GetProductCategories()
         {
-            return await _context.ProductCategories.Select(c=> new CategoryViewModel {
-             Id=c.Id,
-              Description=c.Description,
-             Name=c.Name
-            
+            return await _context.ProductCategories.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Description = c.Description,
+                Name = c.Name
+
             }).ToListAsync();
         }
 

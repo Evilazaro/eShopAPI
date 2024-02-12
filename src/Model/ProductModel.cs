@@ -12,7 +12,7 @@ namespace eShopAPI.Model
         [Required]
         public Guid CategoryId { get; set; }
     }
-    public class ProductViewModel: ProductModelBase
+    public class ProductViewModel : ProductModelBase
     {
         public Guid Id { get; set; }
         public string CategoryName { get; internal set; }

@@ -18,15 +18,16 @@ namespace eShopAPI.Controllers
 
         // GET: api/RankHistory/Product/Guid
         [HttpGet("product/{productId}")]
-        public async Task<ActionResult<IEnumerable<RankHistoryViewModel>>> GetRankHistory([FromRoute]Guid productId)
+        public async Task<ActionResult<IEnumerable<RankHistoryViewModel>>> GetRankHistory([FromRoute] Guid productId)
         {
-            return await _context.RankHistory.Where(z=>z.ProductId== productId).Select(rank=>new RankHistoryViewModel { 
-             Id=rank.Id,
-             Date=rank.Date,
-             Rank=rank.Rank, 
-             ProductId=rank.ProductId,
-             ProductName=rank.Product.Name
-            }).OrderByDescending(z=>z.Date).ToListAsync();
+            return await _context.RankHistory.Where(z => z.ProductId == productId).Select(rank => new RankHistoryViewModel
+            {
+                Id = rank.Id,
+                Date = rank.Date,
+                Rank = rank.Rank,
+                ProductId = rank.ProductId,
+                ProductName = rank.Product.Name
+            }).OrderByDescending(z => z.Date).ToListAsync();
         }
 
 

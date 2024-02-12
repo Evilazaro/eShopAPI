@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eShopAPI.Data
 {
-    public class StoreDBContext:DbContext
+    public class StoreDBContext : DbContext
     {
         public StoreDBContext(DbContextOptions<StoreDBContext> options)
   : base(options)
@@ -17,19 +17,23 @@ namespace eShopAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>(z => {
+            modelBuilder.Entity<Product>(z =>
+            {
                 z.HasKey(z => z.Id);
                 z.HasOne(p => p.ProductCategory).WithMany(pc => pc.Products).HasForeignKey(p => p.ProductCategoryId);
             });
-            modelBuilder.Entity<ProductCategory>(z => {
+            modelBuilder.Entity<ProductCategory>(z =>
+            {
                 z.HasKey(z => z.Id);
             });
-            modelBuilder.Entity<PriceHistory>(z => {
+            modelBuilder.Entity<PriceHistory>(z =>
+            {
                 z.HasKey(z => z.Id);
                 z.HasOne(p => p.Product).WithMany(pc => pc.PriceHistories).HasForeignKey(p => p.ProductId);
 
             });
-            modelBuilder.Entity<RankHistory>(z => {
+            modelBuilder.Entity<RankHistory>(z =>
+            {
                 z.HasKey(z => z.Id);
                 z.HasOne(p => p.Product).WithMany(pc => pc.RankHistories).HasForeignKey(p => p.ProductId);
 

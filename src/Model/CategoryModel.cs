@@ -8,7 +8,7 @@ namespace eShopAPI.Model
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-       
+
     }
     public class CategoryViewModel : CategoryModelBase
     {
