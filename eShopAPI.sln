@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DA2B2B22-603
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopAPI", "src\eShopAPI.csproj", "{F497CB92-2FB4-48C5-99F1-583D90684423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopAspireHost.AppHost", "eShopAspireHost\eShopAspireHost.AppHost\eShopAspireHost.AppHost.csproj", "{F3636354-CAFB-4897-B999-C994CB55602F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopAspireHost.ServiceDefaults", "eShopAspireHost\eShopAspireHost.ServiceDefaults\eShopAspireHost.ServiceDefaults.csproj", "{AD68EFB6-ADAC-4A59-8068-E4E907CAED4B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BC168B3D-EA8A-44BA-85E5-384FCDE9A022}"
@@ -23,10 +21,6 @@ Global
 		{F497CB92-2FB4-48C5-99F1-583D90684423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F497CB92-2FB4-48C5-99F1-583D90684423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F497CB92-2FB4-48C5-99F1-583D90684423}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3636354-CAFB-4897-B999-C994CB55602F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3636354-CAFB-4897-B999-C994CB55602F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3636354-CAFB-4897-B999-C994CB55602F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3636354-CAFB-4897-B999-C994CB55602F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD68EFB6-ADAC-4A59-8068-E4E907CAED4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD68EFB6-ADAC-4A59-8068-E4E907CAED4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD68EFB6-ADAC-4A59-8068-E4E907CAED4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,7 +35,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F497CB92-2FB4-48C5-99F1-583D90684423} = {DA2B2B22-603F-446B-9981-7A399D9AB6DF}
-		{F3636354-CAFB-4897-B999-C994CB55602F} = {DA2B2B22-603F-446B-9981-7A399D9AB6DF}
 		{AD68EFB6-ADAC-4A59-8068-E4E907CAED4B} = {DA2B2B22-603F-446B-9981-7A399D9AB6DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
