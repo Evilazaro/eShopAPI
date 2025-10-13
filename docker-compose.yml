@@ -1,9 +1,7 @@
 
 services:
   eshop-api:
-    image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api
+    image: eshop/eshop-api-${AZURE_ENV_NAME}:latest
     build:
       context: .
       dockerfile: src/Dockerfile
-      tags:
-        - latest
