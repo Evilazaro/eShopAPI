@@ -25,7 +25,7 @@ services:
     language: dotnet
     docker:
       context: .
-      path: ./src/Dockerfile
+      path: Dockerfile
       image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api-${AZURE_ENV_NAME}
       tag: latest
       platform: linux/amd64
