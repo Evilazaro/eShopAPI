@@ -26,3 +26,4 @@ obj/
 *.vscode
 *.suo
 *.user
+.azure

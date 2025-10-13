@@ -1,8 +1,9 @@
-version: '3.4'
 
 services:
-  eshopapi:
+  eshop-api:
     image: ${DOCKER_REGISTRY-}eshopapi
     build:
       context: .
       dockerfile: src/Dockerfile
+      tags:
+        - latest
