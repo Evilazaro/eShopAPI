@@ -8,8 +8,8 @@
       "location": {
         "value": "${AZURE_LOCATION}"
       },
-      "srcExists": {
-        "value": "${SERVICE_SRC_RESOURCE_EXISTS=false}"
+      "eshopApiExists": {
+        "value": "${SERVICE_ESHOP_API_RESOURCE_EXISTS=false}"
       },
       "principalId": {
         "value": "${AZURE_PRINCIPAL_ID}"

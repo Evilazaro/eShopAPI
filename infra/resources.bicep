@@ -5,7 +5,7 @@ param location string = resourceGroup().location
 param tags object = {}
 
 
-param srcExists bool
+param eshopApiExists bool
 
 @description('Id of the user or app to assign application roles')
 param principalId string
@@ -37,7 +37,7 @@ module containerRegistry 'br/public:avm/res/container-registry/registry:0.1.1' =
     publicNetworkAccess: 'Enabled'
     roleAssignments:[
       {
-        principalId: srcIdentity.outputs.principalId
+        principalId: eshopApiIdentity.outputs.principalId
         principalType: 'ServicePrincipal'
         roleDefinitionIdOrName: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
       }
@@ -56,25 +56,25 @@ module containerAppsEnvironment 'br/public:avm/res/app/managed-environment:0.4.5
   }
 }
 
-module srcIdentity 'br/public:avm/res/managed-identity/user-assigned-identity:0.2.1' = {
-  name: 'srcidentity'
+module eshopApiIdentity 'br/public:avm/res/managed-identity/user-assigned-identity:0.2.1' = {
+  name: 'eshopApiidentity'
   params: {
-    name: '${abbrs.managedIdentityUserAssignedIdentities}src-${resourceToken}'
+    name: '${abbrs.managedIdentityUserAssignedIdentities}eshopApi-${resourceToken}'
     location: location
   }
 }
-module srcFetchLatestImage './modules/fetch-container-image.bicep' = {
-  name: 'src-fetch-image'
+module eshopApiFetchLatestImage './modules/fetch-container-image.bicep' = {
+  name: 'eshopApi-fetch-image'
   params: {
-    exists: srcExists
-    name: 'src'
+    exists: eshopApiExists
+    name: 'eshop-api'
   }
 }
 
-module eShopAPI 'br/public:avm/res/app/container-app:0.8.0' = {
-  name: 'eShop-api'
+module eshopApi 'br/public:avm/res/app/container-app:0.8.0' = {
+  name: 'eshopApi'
   params: {
-    name: 'eShop-api'
+    name: 'eshop-api'
     ingressTargetPort: 8080
     scaleMinReplicas: 1
     scaleMaxReplicas: 10
@@ -84,7 +84,7 @@ module eShopAPI 'br/public:avm/res/app/container-app:0.8.0' = {
     }
     containers: [
       {
-        image: srcFetchLatestImage.outputs.?containers[?0].?image ?? 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
+        image: eshopApiFetchLatestImage.outputs.?containers[?0].?image ?? 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
         name: 'main'
         resources: {
           cpu: json('0.5')
@@ -97,10 +97,18 @@ module eShopAPI 'br/public:avm/res/app/container-app:0.8.0' = {
           }
           {
             name: 'AZURE_CLIENT_ID'
-            value: srcIdentity.outputs.clientId
+            value: eshopApiIdentity.outputs.clientId
           }
           {
             name: 'PORT'
+            value: '8080'
+          }
+          {
+            name: 'ASPNETCORE_ENVIRONMENT'
+            value: 'Development'
+          }
+          {
+            name: 'ASPNETCORE_HTTP_PORTS'
             value: '8080'
           }
         ]
@@ -108,18 +116,18 @@ module eShopAPI 'br/public:avm/res/app/container-app:0.8.0' = {
     ]
     managedIdentities:{
       systemAssigned: false
-      userAssignedResourceIds: [srcIdentity.outputs.resourceId]
+      userAssignedResourceIds: [eshopApiIdentity.outputs.resourceId]
     }
     registries:[
       {
         server: containerRegistry.outputs.loginServer
-        identity: srcIdentity.outputs.resourceId
+        identity: eshopApiIdentity.outputs.resourceId
       }
     ]
     environmentResourceId: containerAppsEnvironment.outputs.resourceId
     location: location
-    tags: union(tags, { 'azd-service-name': 'src' })
+    tags: union(tags, { 'azd-service-name': 'eshop-api' })
   }
 }
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.outputs.loginServer
-output AZURE_RESOURCE_SRC_ID string = eShopAPI.outputs.resourceId
+output AZURE_RESOURCE_ESHOP_API_ID string = eshopApi.outputs.resourceId

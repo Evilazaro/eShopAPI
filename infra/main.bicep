@@ -10,7 +10,7 @@ param environmentName string
 param location string
 
 
-param srcExists bool
+param eshopApiExists bool
 
 @description('Id of the user or app to assign application roles')
 param principalId string
@@ -42,8 +42,8 @@ module resources 'resources.bicep' = {
     tags: tags
     principalId: principalId
     principalType: principalType
-    srcExists: srcExists
+    eshopApiExists: eshopApiExists
   }
 }
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = resources.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT
-output AZURE_RESOURCE_SRC_ID string = resources.outputs.AZURE_RESOURCE_SRC_ID
+output AZURE_RESOURCE_ESHOP_API_ID string = resources.outputs.AZURE_RESOURCE_ESHOP_API_ID

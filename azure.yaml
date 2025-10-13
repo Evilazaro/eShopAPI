@@ -3,20 +3,43 @@
 name: eshop-api
 metadata:
     template: azd-init@1.20.0
+
+hooks:
+    postprovision: 
+      shell: sh
+      run: |
+        #!/bin/sh
+        set -e
+        echo "Post-provisioning steps..."
+        echo "Exporting Azure Container Registry endpoint..."
+        export AZURE_CONTAINER_REGISTRY_ENDPOINT=$AZURE_CONTAINER_REGISTRY_ENDPOINT
+        echo "Azure Container Registry endpoint: $AZURE_CONTAINER_REGISTRY_ENDPOINT"
+
+        echo "Building docker-image locally..."
+        docker-compose build
+        echo "Docker-image built successfully."
+
+        echo ""Post-provisioning completed."
+
 services:
-    eShop-api:
-        project: src/eShopAPI.csproj
+    eshop-api:
+        project: src
         host: containerapp
         language: dotnet
         docker:
-            path: src/Dockerfile
             context: .
-            image: $AZURE_CONTAINER_REGISTRY_ENDPOINT/eshopapi
+            path: src/Dockerfile
+            image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api
             tag: latest
             platform: linux/amd64
-            registry: $AZURE_CONTAINER_REGISTRY_ENDPOINT
+            registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
             remoteBuild: false
 resources:
-    eShop-api:
+    eshop-api:
         type: host.containerapp
         port: 8080
+        env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+          - name: ASPNETCORE_HTTP_PORTS
+            value: '8080'
