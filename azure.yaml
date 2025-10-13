@@ -2,44 +2,41 @@
 
 name: eshop
 metadata:
-    template: azd-init@1.20.0
+  template: azd-init@1.20.0
 
 hooks:
-    postprovision: 
-      shell: sh
-      run: |
-        #!/bin/sh
-        set -e
-        echo "Post-provisioning steps..."
-        echo "Exporting Azure Container Registry endpoint..."
-        export AZURE_CONTAINER_REGISTRY_ENDPOINT=$AZURE_CONTAINER_REGISTRY_ENDPOINT
-        echo "Azure Container Registry endpoint: $AZURE_CONTAINER_REGISTRY_ENDPOINT"
+  postprovision:
+    shell: sh
+    run: |
+      #!/bin/sh
+      set -e
+      echo "Post-provisioning steps..."
 
-        # echo "Building docker-image locally..."
-        # docker-compose build
-        # echo "Docker-image built successfully."
+      echo "Building docker-image locally..."
+      docker-compose build
+      echo "Docker-image built successfully."
 
-        echo "Post-provisioning completed."
+      echo "Post-provisioning completed."
 
 services:
-    eshop-api:
-        project: src
-        host: containerapp
-        language: dotnet
-        docker:
-            context: .
-            path: ./src/
-            image: eshop/eshop-api-${AZURE_ENV_NAME}
-            tag: latest
-            platform: linux/amd64
-            registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
-            remoteBuild: false
+  eshop-api:
+    host: containerapp
+    project: ./src/
+    language: dotnet
+    docker:
+      context: .
+      path: ./src/Dockerfile
+      image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api-${AZURE_ENV_NAME}
+      tag: latest
+      platform: linux/amd64
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      remoteBuild: true
 resources:
-    eshop-api:
-        type: host.containerapp
-        port: 8080
-        env:
-          - name: ASPNETCORE_ENVIRONMENT
-            value: Development
-          - name: ASPNETCORE_HTTP_PORTS
-            value: '8080'
+  eshop-api:
+    type: host.containerapp
+    port: 8080
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+      - name: ASPNETCORE_HTTP_PORTS
+        value: "8080"
