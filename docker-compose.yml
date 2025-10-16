@@ -1,0 +1,6 @@
+services:
+  eshopapi:
+    image: ${DOCKER_REGISTRY-}eshopapi
+    build:
+      context: src
+      dockerfile: Dockerfile
