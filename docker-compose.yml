@@ -1,7 +1,0 @@
-
-services:
-  eshop-api:
-    image: eshop/eshop-api-${AZURE_ENV_NAME}:latest
-    build:
-      context: .
-      dockerfile: src/Dockerfile
