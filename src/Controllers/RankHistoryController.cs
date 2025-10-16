@@ -1,4 +1,4 @@
-﻿using eShopAPI.Data;
+using eShopAPI.Data;
 using eShopAPI.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

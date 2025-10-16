@@ -1,4 +1,4 @@
-﻿namespace eShopAPI.Data.Entities
+namespace eShopAPI.Data.Entities
 {
     public class RankHistory
     {

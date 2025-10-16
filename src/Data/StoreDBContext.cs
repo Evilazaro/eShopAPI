@@ -1,4 +1,4 @@
-﻿using eShopAPI.Data.Entities;
+using eShopAPI.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace eShopAPI.Data

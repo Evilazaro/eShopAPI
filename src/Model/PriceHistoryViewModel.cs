@@ -1,4 +1,4 @@
-﻿namespace eShopAPI.Model
+namespace eShopAPI.Model
 {
     public class RankHistoryViewModel
     {

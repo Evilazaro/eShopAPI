@@ -30,7 +30,7 @@ services:
       tag: latest
       platform: linux/amd64
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
-      remoteBuild: true
+      remoteBuild: false
 resources:
   eshop-api:
     type: host.containerapp
