@@ -34,6 +34,15 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
+module monitor 'shared/management/monitoring.bicep' = {
+  scope: rg
+  name: 'monitoring'
+  params: {
+    location: location
+    tags: tags
+  }
+}
+
 module resources 'resources.bicep' = {
   scope: rg
   name: 'resources'
