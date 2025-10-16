@@ -8,7 +8,23 @@ services:
       - "8080"
       - "8081"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - eshop-secrets:/home/app/.microsoft/usersecrets:ro
+      - eshop-secrets:/root/.microsoft/usersecrets:ro
+      - eshop-https:/home/app/.aspnet/https:ro
+      - eshop-https:/root/.aspnet/https:ro
+
+volumes:
+  eshop-secrets:
+    driver: external
+    driver_opts:
+      type: none
+      device: ${APPDATA}/Microsoft/UserSecrets
+      o: bind
+
+  eshop-https:
+    driver: external
+    driver_opts:
+      type: none
+      device: ${APPDATA}/ASP.NET/Https
+      o: bind
+  
