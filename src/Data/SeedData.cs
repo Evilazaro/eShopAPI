@@ -1,4 +1,4 @@
-﻿using Bogus;
+using Bogus;
 using eShopAPI.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 

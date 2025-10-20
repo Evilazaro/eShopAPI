@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace eShopAPI.Model
 {
@@ -6,8 +6,8 @@ namespace eShopAPI.Model
     public abstract class CategoryModelBase
     {
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
 
     }
     public class CategoryViewModel : CategoryModelBase

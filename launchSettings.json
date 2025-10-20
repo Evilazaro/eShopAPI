@@ -2,10 +2,16 @@
   "profiles": {
     "Docker Compose": {
       "commandName": "DockerCompose",
+      "applicationUrl": "https://localhost:8081",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "eshopapi",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
       "serviceActions": {
         "eshopapi": "StartDebugging"
-      }
+      },
+      "useSSL": true
     }
   }
 }

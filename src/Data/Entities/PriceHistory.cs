@@ -1,4 +1,4 @@
-﻿namespace eShopAPI.Data.Entities
+namespace eShopAPI.Data.Entities
 {
     public class PriceHistory
     {
@@ -7,6 +7,6 @@
         public decimal NewPrice { get; set; }
         public DateTime ChangeDate { get; set; }
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
     }
 }

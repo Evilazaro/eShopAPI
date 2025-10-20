@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace eShopAPI.Model
 {
     public abstract class ProductModelBase
     {
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         [Required]
         public decimal Price { get; set; }
         [Required]
@@ -15,7 +15,7 @@ namespace eShopAPI.Model
     public class ProductViewModel : ProductModelBase
     {
         public Guid Id { get; set; }
-        public string CategoryName { get; internal set; }
+        public string? CategoryName { get; internal set; }
     }
     public class ProductCreateModel : ProductModelBase
     {

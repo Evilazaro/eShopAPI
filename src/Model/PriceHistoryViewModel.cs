@@ -1,4 +1,4 @@
-﻿namespace eShopAPI.Model
+namespace eShopAPI.Model
 {
     public class RankHistoryViewModel
     {
@@ -6,6 +6,6 @@
         public int Rank { get; set; }
         public DateTime Date { get; set; }
         public Guid ProductId { get; set; }
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
     }
 }

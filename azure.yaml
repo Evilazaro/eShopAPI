@@ -2,41 +2,35 @@
 
 name: eshop
 metadata:
-  template: azd-init@1.20.0
+    template: azd-init@1.20.0
+services:
+    eshop-api:
+        project: src
+        host: containerapp
+        language: dotnet
+        docker:
+            path: Dockerfile
+            image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api-${AZURE_ENV_NAME}
+            tag: latest
+            platform: linux/amd64
+            registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+            remoteBuild: true
+
+resources:
+    eshop-api:
+        type: host.containerapp
+        port: 8080
 
 hooks:
-  postprovision:
-    shell: sh
-    run: |
-      #!/bin/sh
-      set -e
-      echo "Post-provisioning steps..."
+    postprovision:
+        shell: pwsh
+        run: |
+            #!/usr/bin/env pwsh
 
-      echo "Building docker-image locally..."
-      docker-compose build
-      echo "Docker-image built successfully."
+            Write-Host "Post-provisioning steps..."
 
-      echo "Post-provisioning completed."
+            Write-Host "Building docker-image locally..."
+            docker-compose build
+            Write-Host "Docker-image built successfully."
 
-services:
-  eshop-api:
-    host: containerapp
-    project: ./src/
-    language: dotnet
-    docker:
-      context: .
-      path: Dockerfile
-      image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api-${AZURE_ENV_NAME}
-      tag: latest
-      platform: linux/amd64
-      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
-      remoteBuild: true
-resources:
-  eshop-api:
-    type: host.containerapp
-    port: 8080
-    env:
-      - name: ASPNETCORE_ENVIRONMENT
-        value: Development
-      - name: ASPNETCORE_HTTP_PORTS
-        value: "8080"
+            Write-Host "Post-provisioning completed."
