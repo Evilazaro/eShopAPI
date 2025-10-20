@@ -15,10 +15,8 @@ builder.Services.AddOpenApi();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi(pattern: "/openapi/v1.json");
-}
+
+app.MapOpenApi(pattern: "/openapi/v1.json");
 
 app.UseHttpsRedirection();
 

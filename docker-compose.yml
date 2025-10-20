@@ -1,6 +1,6 @@
 services:
   eshopapi:
-    image: ${DOCKER_REGISTRY-}eshopapi
+    image: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}/eshop-api-${AZURE_ENV_NAME}
     build:
       context: src
       dockerfile: Dockerfile
